@@ -1,0 +1,185 @@
+version: "3.0"
+     
+services:
+  #Plex - used to display the media
+  #
+  #This can also be replaced by Emby/Jellyfin
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    environment:
+      - PUID=${PUID}
+      - PGID=${GUID}
+      - TZ=${TZ}
+      - VERSION=docker
+      - PLEX_CLAIM=${PLEX_CLAIM}
+    devices:
+     - /dev/dri:/dev/dri #Required for plex HW transcoding / QuickSync
+    volumes:
+      - /home/mint/plexs-stack/plex/config:/config
+      - /data/plex-stack/media/tv:/tv
+      - /data/plex-stack/media/movies:/movies
+    restart: unless-stopped
+
+  #Radarr - used to find movies automatically
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${GUID}
+      - TZ=${TZ}
+    volumes:
+      - /home/mint/plexs-stack/radarr/config:/config
+      - /data/plex-stack:/share #Access to the entire share
+    #networks: #Does not connect to overseer if you use NPM
+    #  - proxy
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+    
+  #Sonarr - used to find tv shows automatically
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${GUID}
+      - TZ=${TZ}
+    volumes:
+      - /home/mint/plexs-stack/sonarr/config:/config
+      - /data/plex-stack:/share #Access to the entire share
+    #networks: #Does not connect to overseer if you use NPM
+    #  - proxy
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+  
+  #Prowlarr - manages your Sonarr, Radarr and download client
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${GUID}
+      - TZ=${TZ}
+    volumes:
+      - /home/mint/plexs-stack/prowlarr/config:/config
+    #networks:
+    #  - proxy
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+    
+  #Autobrr - used to grab torrents using the trackers IRC channel - Increases seeding due to grabbing content before RSS feed
+  autobrr:
+    container_name: autobrr
+    image: ghcr.io/autobrr/autobrr:latest
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${GUID}
+    volumes:
+      - /home/mint/plexs-stack/autobrr/config:/config
+    ports:
+      - 7474:7474
+    
+  #Flaresolerr - Used as a proxy server to bypass Cloudflare and DDoS-GUARD protection.
+  flaresolverr:
+    # DockerHub mirror flaresolverr/flaresolverr:latest
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=info
+      - LOG_HTML=false
+      - CAPTCHA_SOLVER=none
+      - TZ=${TZ}
+    ports:
+      - 8191:8191
+    restart: unless-stopped
+      
+  #Qbittorent - torrenting software
+  #
+  #You can also use RuTorrent, Transmisson or Deluge
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=${PUID}
+      - PGID=${GUID}
+      - TZ=${TZ}
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=8694 #Make sure to port forward this port in your router so you can seed more effectively
+    volumes:
+      - /home/mint/plexs-stack/qbittorent/config:/config
+      - /data/plex-stack:/share
+    restart: unless-stopped
+
+  #Tdarr - to transcode videos from one format to another like x265 or H.265
+  #
+  #This container requires a decent amount of horse power to run but will save space in the long run
+  tdarr:
+    container_name: tdarr
+    image: ghcr.io/haveagitgat/tdarr:latest
+    restart: unless-stopped
+    ports:
+      - 8265:8265 # webUI port
+      - 8266:8266 # server port
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${GUID}
+      - UMASK_SET=002
+      - nodeName=ServerNode
+      - serverIP=0.0.0.0
+      - serverPort=8266
+      - webUIPort=8265
+      - internalNode=true
+      - inContainer=true
+      - ffmpegVersion=6
+    volumes:
+      - /home/mint/plexs-stack/tdarr/server:/app/server
+      - /home/mint/plexs-stack/tdarr/configs:/app/configs
+      - /home/mint/plexs-stack/tdarr/logs:/app/logs
+      - /data/plex-stack:/media
+      - /transcode_cache:/temp
+    devices:
+     - /dev/dri:/dev/dri #Required for HW transcoding / QuickSync
+      
+  #Bazarr - for subtitles. Try to use SRT format if you can rather than PGS due to performance issues
+  bazarr:
+    container_name: bazarr
+    image: lscr.io/linuxserver/bazarr:latest
+    restart: unless-stopped
+    environment:
+      - PUID=${GUID}
+      - PGID=${GUID}
+      - TZ=${TZ}
+    volumes:
+      - /home/mint/plexs-stack/bazarr/config:/config
+      - /data/plex-stack:/share
+    ports:
+      - 6767:6767
+      
+
+  #Wizarr - Allows you to create a share link that you can send to users to invite them to your media server
+  wizarr:
+    container_name: wizarr
+    image: ghcr.io/wizarrrr/wizarr:latest
+    ports:
+      - 5690:5690
+    volumes:
+      - /home/mint/plexs-stack/wizarr/data/database:/data/database
+
+  # Used to sync Trash Guides config's to radarr and sonarr
+  # Only accessible via command line! No GUI
+  recyclarr:
+    image: ghcr.io/recyclarr/recyclarr
+    container_name: recyclarr
+    user: ${PUID}:${GUID}
+    volumes:
+      - /home/mint/plexs-stack/recyclarr/config:/config
+    environment:
+      - TZ=${TZ}
+ 
