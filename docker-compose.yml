@@ -23,49 +23,49 @@ services:
       - /data/plex-stack/media/movies:/movies
     restart: unless-stopped
 
-  #Radarr - used to find movies automatically
-  radarr:
-    image: lscr.io/linuxserver/radarr:latest
-    container_name: radarr
-    environment:
-      - PUID=${PUID}
-      - PGID=${GUID}
-      - TZ=${TZ}
-    volumes:
-      - /home/mint/plexs-stack/radarr/config:/config
-      - /data/plex-stack:/share #Access to the entire share
-    #networks: #Does not connect to overseer if you use NPM
-    #  - proxy
-    restart: unless-stopped
+  # #Radarr - used to find movies automatically
+  # radarr:
+  #   image: lscr.io/linuxserver/radarr:latest
+  #   container_name: radarr
+  #   environment:
+  #     - PUID=${PUID}
+  #     - PGID=${GUID}
+  #     - TZ=${TZ}
+  #   volumes:
+  #     - /home/mint/plexs-stack/radarr/config:/config
+  #     - /data/plex-stack:/share #Access to the entire share
+  #   #networks: #Does not connect to overseer if you use NPM
+  #   #  - proxy
+  #   restart: unless-stopped
     
-  #Sonarr - used to find tv shows automatically
-  sonarr:
-    image: lscr.io/linuxserver/sonarr:latest
-    container_name: sonarr
-    environment:
-      - PUID=${PUID}
-      - PGID=${GUID}
-      - TZ=${TZ}
-    volumes:
-      - /home/mint/plexs-stack/sonarr/config:/config
-      - /data/plex-stack:/share #Access to the entire share
-    #networks: #Does not connect to overseer if you use NPM
-    #  - proxy
-    restart: unless-stopped
+  # #Sonarr - used to find tv shows automatically
+  # sonarr:
+  #   image: lscr.io/linuxserver/sonarr:latest
+  #   container_name: sonarr
+  #   environment:
+  #     - PUID=${PUID}
+  #     - PGID=${GUID}
+  #     - TZ=${TZ}
+  #   volumes:
+  #     - /home/mint/plexs-stack/sonarr/config:/config
+  #     - /data/plex-stack:/share #Access to the entire share
+  #   #networks: #Does not connect to overseer if you use NPM
+  #   #  - proxy
+  #   restart: unless-stopped
   
-  #Prowlarr - manages your Sonarr, Radarr and download client
-  prowlarr:
-    image: lscr.io/linuxserver/prowlarr:latest
-    container_name: prowlarr
-    environment:
-      - PUID=${PUID}
-      - PGID=${GUID}
-      - TZ=${TZ}
-    volumes:
-      - /home/mint/plexs-stack/prowlarr/config:/config
-    #networks:
-    #  - proxy
-    restart: unless-stopped
+  # #Prowlarr - manages your Sonarr, Radarr and download client
+  # prowlarr:
+  #   image: lscr.io/linuxserver/prowlarr:latest
+  #   container_name: prowlarr
+  #   environment:
+  #     - PUID=${PUID}
+  #     - PGID=${GUID}
+  #     - TZ=${TZ}
+  #   volumes:
+  #     - /home/mint/plexs-stack/prowlarr/config:/config
+  #   #networks:
+  #   #  - proxy
+  #   restart: unless-stopped
     
   # #Autobrr - used to grab torrents using the trackers IRC channel - Increases seeding due to grabbing content before RSS feed
   # autobrr:
