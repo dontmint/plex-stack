@@ -81,19 +81,19 @@ services:
   #   ports:
   #     - 7474:7474
     
-  # #Flaresolerr - Used as a proxy server to bypass Cloudflare and DDoS-GUARD protection.
-  # flaresolverr:
-  #   # DockerHub mirror flaresolverr/flaresolverr:latest
-  #   image: ghcr.io/flaresolverr/flaresolverr:latest
-  #   container_name: flaresolverr
-  #   environment:
-  #     - LOG_LEVEL=info
-  #     - LOG_HTML=false
-  #     - CAPTCHA_SOLVER=none
-  #     - TZ=${TZ}
-  #   ports:
-  #     - 8191:8191
-  #   restart: unless-stopped
+  #Flaresolerr - Used as a proxy server to bypass Cloudflare and DDoS-GUARD protection.
+  flaresolverr:
+    # DockerHub mirror flaresolverr/flaresolverr:latest
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=info
+      - LOG_HTML=false
+      - CAPTCHA_SOLVER=none
+      - TZ=${TZ}
+    ports:
+      - 8191:8191
+    restart: unless-stopped
       
   #Qbittorent - torrenting software
   #
