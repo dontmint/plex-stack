@@ -111,6 +111,8 @@ services:
       - /home/mint/plexs-stack/qbittorent/config:/config
       - /data/plex-stack:/share
     restart: unless-stopped
+    labels:
+      - traefik.http.services.plex.loadbalancer.server.port=8080
 
   #Tdarr - to transcode videos from one format to another like x265 or H.265
   #
