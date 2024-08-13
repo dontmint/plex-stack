@@ -7,7 +7,7 @@ services:
   plex:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
-    expose:
+    ports:
       - 32400
     environment:
       - PUID=${PUID}
