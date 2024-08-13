@@ -7,8 +7,6 @@ services:
   plex:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
-    ports:
-      - 32400:32400
     environment:
       - PUID=${PUID}
       - PGID=${GUID}
@@ -36,8 +34,6 @@ services:
       - /data/plex-stack:/share #Access to the entire share
     #networks: #Does not connect to overseer if you use NPM
     #  - proxy
-    ports:
-      - 7878:7878
     restart: unless-stopped
     
   #Sonarr - used to find tv shows automatically
@@ -53,8 +49,6 @@ services:
       - /data/plex-stack:/share #Access to the entire share
     #networks: #Does not connect to overseer if you use NPM
     #  - proxy
-    ports:
-      - 8989:8989
     restart: unless-stopped
   
   #Prowlarr - manages your Sonarr, Radarr and download client
@@ -69,8 +63,6 @@ services:
       - /home/mint/plexs-stack/prowlarr/config:/config
     #networks:
     #  - proxy
-    ports:
-      - 9696:9696
     restart: unless-stopped
     
   # #Autobrr - used to grab torrents using the trackers IRC channel - Increases seeding due to grabbing content before RSS feed
