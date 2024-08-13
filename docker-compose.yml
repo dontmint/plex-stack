@@ -20,6 +20,9 @@ services:
       - /data/plex-stack/media/tv:/tv
       - /data/plex-stack/media/movies:/movies
     restart: unless-stopped
+    labels:
+      - traefik.http.routers.http-0-tgs48o8o8oosws40goow4ko0.service=plex
+      - traefik.http.services.plex.loadbalancer.server.port=32400
 
   # #Radarr - used to find movies automatically
   # radarr:
