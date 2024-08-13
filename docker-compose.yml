@@ -7,6 +7,8 @@ services:
   plex:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
+    ports:
+      - 32400:32400
     environment:
       - PUID=${PUID}
       - PGID=${GUID}
@@ -17,8 +19,8 @@ services:
      - /dev/dri:/dev/dri #Required for plex HW transcoding / QuickSync
     volumes:
       - /home/mint/plexs-stack/plex/config:/config
-      - /data/plex-stack/media/tv:/tv
-      - /data/plex-stack/media/movies:/movies
+      - /data/hdd/media/tv:/tv
+      - /data/hdd/media/movies:/movies
     restart: unless-stopped
     labels:
       - traefik.http.services.plex.loadbalancer.server.port=32400
@@ -33,7 +35,7 @@ services:
       - TZ=${TZ}
     volumes:
       - /home/mint/plexs-stack/radarr/config:/config
-      - /data/plex-stack:/share #Access to the entire share
+      - /data/hdd:/share #Access to the entire share
     #networks: #Does not connect to overseer if you use NPM
     #  - proxy
     restart: unless-stopped
@@ -48,7 +50,7 @@ services:
       - TZ=${TZ}
     volumes:
       - /home/mint/plexs-stack/sonarr/config:/config
-      - /data/plex-stack:/share #Access to the entire share
+      - /data/hdd:/share #Access to the entire share
     #networks: #Does not connect to overseer if you use NPM
     #  - proxy
     restart: unless-stopped
@@ -109,7 +111,7 @@ services:
       - TORRENTING_PORT=8694 #Make sure to port forward this port in your router so you can seed more effectively
     volumes:
       - /home/mint/plexs-stack/qbittorent/config:/config
-      - /data/plex-stack:/share
+      - /data/hdd:/share
     restart: unless-stopped
     labels:
       - traefik.http.services.plex.loadbalancer.server.port=8080
@@ -140,7 +142,7 @@ services:
       - /home/mint/plexs-stack/tdarr/server:/app/server
       - /home/mint/plexs-stack/tdarr/configs:/app/configs
       - /home/mint/plexs-stack/tdarr/logs:/app/logs
-      - /data/plex-stack:/media
+      - /data/hdd:/media
       - /transcode_cache:/temp
     devices:
      - /dev/dri:/dev/dri #Required for HW transcoding / QuickSync
@@ -156,7 +158,7 @@ services:
       - TZ=${TZ}
     volumes:
       - /home/mint/plexs-stack/bazarr/config:/config
-      - /data/plex-stack:/share
+      - /data/hdd:/share
       
 
   # #Wizarr - Allows you to create a share link that you can send to users to invite them to your media server
