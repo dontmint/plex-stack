@@ -7,6 +7,8 @@ services:
   plex:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
+    expose:
+      - 32400
     environment:
       - PUID=${PUID}
       - PGID=${GUID}
