@@ -118,51 +118,51 @@ services:
     labels:
       - traefik.http.services.plex.loadbalancer.server.port=8080
 
-  #Tdarr - to transcode videos from one format to another like x265 or H.265
-  #
-  #This container requires a decent amount of horse power to run but will save space in the long run
-  tdarr:
-    container_name: tdarr
-    image: ghcr.io/haveagitgat/tdarr:latest
-    restart: unless-stopped
-    ports:
-      - 8265:8265 # webUI port
-      - 8266:8266 # server port
-    environment:
-      - TZ=${TZ}
-      - PUID=${PUID}
-      - PGID=${GUID}
-      - UMASK_SET=002
-      - nodeName=ServerNode
-      - serverIP=0.0.0.0
-      - serverPort=8266
-      - webUIPort=8265
-      - internalNode=true
-      - inContainer=true
-      - ffmpegVersion=6
-    volumes:
-      - /home/mint/plexs-stack/tdarr/server:/app/server
-      - /home/mint/plexs-stack/tdarr/configs:/app/configs
-      - /home/mint/plexs-stack/tdarr/logs:/app/logs
-      - /data/hdd:/media
-      - /transcode_cache:/temp
-    devices:
-     - /dev/dri:/dev/dri #Required for HW transcoding / QuickSync
+  # #Tdarr - to transcode videos from one format to another like x265 or H.265
+  # #
+  # #This container requires a decent amount of horse power to run but will save space in the long run
+  # tdarr:
+  #   container_name: tdarr
+  #   image: ghcr.io/haveagitgat/tdarr:latest
+  #   restart: unless-stopped
+  #   ports:
+  #     - 8265:8265 # webUI port
+  #     - 8266:8266 # server port
+  #   environment:
+  #     - TZ=${TZ}
+  #     - PUID=${PUID}
+  #     - PGID=${GUID}
+  #     - UMASK_SET=002
+  #     - nodeName=ServerNode
+  #     - serverIP=0.0.0.0
+  #     - serverPort=8266
+  #     - webUIPort=8265
+  #     - internalNode=true
+  #     - inContainer=true
+  #     - ffmpegVersion=6
+  #   volumes:
+  #     - /home/mint/plexs-stack/tdarr/server:/app/server
+  #     - /home/mint/plexs-stack/tdarr/configs:/app/configs
+  #     - /home/mint/plexs-stack/tdarr/logs:/app/logs
+  #     - /data/hdd:/media
+  #     - /transcode_cache:/temp
+  #   devices:
+  #    - /dev/dri:/dev/dri #Required for HW transcoding / QuickSync
       
-  # #Bazarr - for subtitles. Try to use SRT format if you can rather than PGS due to performance issues
-  bazarr:
-    container_name: bazarr
-    image: lscr.io/linuxserver/bazarr:latest
-    restart: unless-stopped
-    ports:
-      - 6767:6767
-    environment:
-      - PUID=${GUID}
-      - PGID=${GUID}
-      - TZ=${TZ}
-    volumes:
-      - /home/mint/plexs-stack/bazarr/config:/config
-      - /data/hdd:/share
+  # # #Bazarr - for subtitles. Try to use SRT format if you can rather than PGS due to performance issues
+  # bazarr:
+  #   container_name: bazarr
+  #   image: lscr.io/linuxserver/bazarr:latest
+  #   restart: unless-stopped
+  #   ports:
+  #     - 6767:6767
+  #   environment:
+  #     - PUID=${GUID}
+  #     - PGID=${GUID}
+  #     - TZ=${TZ}
+  #   volumes:
+  #     - /home/mint/plexs-stack/bazarr/config:/config
+  #     - /data/hdd:/share
       
 
   # #Wizarr - Allows you to create a share link that you can send to users to invite them to your media server
