@@ -1,4 +1,4 @@
-version: "3.0"
+version: "3.9"
      
 services:
   #Plex - used to display the media
@@ -7,6 +7,7 @@ services:
   plex:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
+    shm_size: 16G
     ports:
       - 32400:32400
     environment:
