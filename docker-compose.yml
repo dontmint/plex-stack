@@ -82,7 +82,7 @@ services:
   #     - /home/mint/plexs-stack/autobrr/config:/config
   #   ports:
   #     - 7474:7474
-    
+
   #Flaresolerr - Used as a proxy server to bypass Cloudflare and DDoS-GUARD protection.
   flaresolverr:
     # DockerHub mirror flaresolverr/flaresolverr:latest
@@ -96,7 +96,7 @@ services:
     ports:
       - 8191:8191
     restart: unless-stopped
-      
+
   #Qbittorent - torrenting software
   #
   #You can also use RuTorrent, Transmisson or Deluge
@@ -184,4 +184,3 @@ services:
   #     - /home/mint/plexs-stack/recyclarr/config:/config
   #   environment:
   #     - TZ=${TZ}
- 
