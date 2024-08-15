@@ -68,7 +68,7 @@ services:
     #networks:
     #  - proxy
     restart: unless-stopped
-    
+
   # #Autobrr - used to grab torrents using the trackers IRC channel - Increases seeding due to grabbing content before RSS feed
   # autobrr:
   #   container_name: autobrr
@@ -184,3 +184,17 @@ services:
   #     - /home/mint/plexs-stack/recyclarr/config:/config
   #   environment:
   #     - TZ=${TZ}
+
+  unmanic:
+      container_name: unmanic
+      image: josh5/unmanic:latest
+      ports:
+        - 5555:8888
+      environment:
+        - PUID=1000
+        - PGID=1000
+      volumes:
+        - /home/mint/plexs-stack/unmanic/config:/config
+        - /data/hdd/media/:/library
+      devices:
+        - /dev/dri:/dev/dri   
