@@ -5,6 +5,7 @@ services:
   #
   #This can also be replaced by Emby/Jellyfin
   plex:
+    hostname: plex-gtr6
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
     shm_size: 16G
