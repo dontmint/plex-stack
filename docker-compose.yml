@@ -4,7 +4,6 @@ services:
   jellyfin:
     image: jellyfin/jellyfin
     container_name: jellyfin
-    network_mode: 'host'
     shm_size: 16G
     environment:
       - PUID=${PUID}
