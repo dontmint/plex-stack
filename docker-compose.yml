@@ -1,9 +1,24 @@
 version: "3.9"
      
 services:
-  #Plex - used to display the media
-  #
-  #This can also be replaced by Emby/Jellyfin
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    user: ${PUID}:${GUID}
+    network_mode: 'host'
+    shm_size: 16G
+    environment:
+      - PUID=${PUID}
+      - PGID=${GUID}
+    volumes:
+      - /home/mint/plexs-stack/jellyfin/config:/config
+      - type: bind
+        source: /data/hdd/media/
+        target: /media
+    restart: 'unless-stopped'
+    environment:
+      - JELLYFIN_PublishedServerUrl=http://media.sweetminty.com
+
   plex:
     hostname: plex-gtr6
     image: lscr.io/linuxserver/plex:latest
