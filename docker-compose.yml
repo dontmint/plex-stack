@@ -130,7 +130,7 @@ services:
       - /data/hdd:/share
     restart: unless-stopped
     labels:
-      - traefik.http.services.plex.loadbalancer.server.port=8080
+      - traefik.http.services.qbittorrent.loadbalancer.server.port=8080
 
   # #Tdarr - to transcode videos from one format to another like x265 or H.265
   # #
