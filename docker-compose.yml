@@ -152,6 +152,23 @@ services:
     labels:
       - traefik.http.services.transmission.loadbalancer.server.port=9091
 
+
+  flood:
+    hostname: flood
+    image: jesec/flood
+    user: ${PUID}:${GUID}
+    restart: unless-stopped
+    command: --port 3001 --allowedpath /share
+    environment:
+      - HOME="/config"
+      - PUID=${PUID}
+      - PGID=${PUID}
+    volumes:
+      - /home/mint/plexs-stack/flood/data:/config
+      - /data/hdd:/share
+    labels:
+      - traefik.http.services.flood.loadbalancer.server.port=3001
+
   # #Tdarr - to transcode videos from one format to another like x265 or H.265
   # #
   # #This container requires a decent amount of horse power to run but will save space in the long run
