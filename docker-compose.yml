@@ -132,6 +132,26 @@ services:
     labels:
       - traefik.http.services.qbittorrent.loadbalancer.server.port=8080
 
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    container_name: transmission
+    environment:
+      - PUID=${PUID}
+      - PGID=${PUID}
+      - TZ=Etc/UTC
+      - TRANSMISSION_WEB_HOME= #optional
+      - USER= #optional
+      - PASS= #optional
+      - WHITELIST= #optional
+      - PEERPORT= #optional
+      - HOST_WHITELIST= #optional
+    volumes:
+      - /home/mint/plexs-stack/transmission/data:/config
+      - /data/hdd:/share
+    restart: unless-stopped
+    labels:
+      - traefik.http.services.transmission.loadbalancer.server.port=9091
+
   # #Tdarr - to transcode videos from one format to another like x265 or H.265
   # #
   # #This container requires a decent amount of horse power to run but will save space in the long run
@@ -199,16 +219,16 @@ services:
   #   environment:
   #     - TZ=${TZ}
 
-  unmanic:
-      container_name: unmanic
-      image: josh5/unmanic:latest
-      ports:
-        - 5555:8888
-      environment:
-        - PUID=1000
-        - PGID=1000
-      volumes:
-        - /home/mint/plexs-stack/unmanic/config:/config
-        - /data/hdd/media/:/library
-      devices:
-        - /dev/dri:/dev/dri   
+  # unmanic:
+  #     container_name: unmanic
+  #     image: josh5/unmanic:latest
+  #     ports:
+  #       - 5555:8888
+  #     environment:
+  #       - PUID=1000
+  #       - PGID=1000
+  #     volumes:
+  #       - /home/mint/plexs-stack/unmanic/config:/config
+  #       - /data/hdd/media/:/library
+  #     devices:
+  #       - /dev/dri:/dev/dri   
