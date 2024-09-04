@@ -160,7 +160,7 @@ services:
     restart: unless-stopped
     command: --port 3001 --allowedpath /share
     environment:
-      - HOME="/config"
+      - HOME=/config
       - PUID=${PUID}
       - PGID=${PUID}
     volumes:
