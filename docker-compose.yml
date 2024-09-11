@@ -200,20 +200,18 @@ services:
   #   devices:
   #    - /dev/dri:/dev/dri #Required for HW transcoding / QuickSync
       
-  # # #Bazarr - for subtitles. Try to use SRT format if you can rather than PGS due to performance issues
-  # bazarr:
-  #   container_name: bazarr
-  #   image: lscr.io/linuxserver/bazarr:latest
-  #   restart: unless-stopped
-  #   ports:
-  #     - 6767:6767
-  #   environment:
-  #     - PUID=${GUID}
-  #     - PGID=${GUID}
-  #     - TZ=${TZ}
-  #   volumes:
-  #     - /home/mint/plexs-stack/bazarr/config:/config
-  #     - /data/hdd:/share
+  # #Bazarr - for subtitles. Try to use SRT format if you can rather than PGS due to performance issues
+  bazarr:
+    container_name: bazarr
+    image: lscr.io/linuxserver/bazarr:latest
+    restart: unless-stopped
+    environment:
+      - PUID=${GUID}
+      - PGID=${GUID}
+      - TZ=${TZ}
+    volumes:
+      - /home/mint/plexs-stack/bazarr/config:/config
+      - /data/hdd:/share
       
 
   # #Wizarr - Allows you to create a share link that you can send to users to invite them to your media server
