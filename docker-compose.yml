@@ -18,7 +18,7 @@ services:
     
   plex:
     hostname: plex-gtr6
-    image: lscr.io/linuxserver/plex:latest
+    image: lscr.io/linuxserver/plex:1.40.4
     container_name: plex
     shm_size: 16G
     ports:
