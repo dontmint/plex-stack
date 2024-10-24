@@ -221,6 +221,17 @@ services:
     volumes:
       - /home/mint/plexs-stack/bazarr/config:/config
       - /data/hdd:/share
+
+  overseerr:
+    image: sctx/overseerr:latest
+    container_name: overseerr
+    environment:
+      - LOG_LEVEL=debug
+      - TZ=Asia/Ho_Chi_Minh
+      - PORT=5055
+    volumes:
+      - /home/mint/plexs-stack/overseerr:/app/config
+    restart: unless-stopped
       
 
   # #Wizarr - Allows you to create a share link that you can send to users to invite them to your media server
