@@ -138,6 +138,7 @@ services:
     volumes:
       - /home/mint/plexs-stack/qbittorent/config:/config
       - /data/hdd:/share
+      - /data/ssd:/cache
     restart: unless-stopped
     labels:
       - traefik.http.services.qbittorrent.loadbalancer.server.port=8080
@@ -158,6 +159,7 @@ services:
     volumes:
       - /home/mint/plexs-stack/transmission/data:/config
       - /data/hdd:/share
+      - /data/ssd:/cache
     restart: unless-stopped
     labels:
       - traefik.http.services.transmission.loadbalancer.server.port=9091
