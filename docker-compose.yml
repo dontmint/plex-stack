@@ -43,8 +43,7 @@ services:
      - /dev/dri:/dev/dri #Required for plex HW transcoding / QuickSync
     volumes:
       - /home/mint/plexs-stack/plex/config:/config
-      - /data/hdd/media/tv:/tv
-      - /data/hdd/media/movies:/movies
+      - /data/hdd/media/:/media
     restart: unless-stopped
     labels:
       - traefik.http.services.plex.loadbalancer.server.port=32400
