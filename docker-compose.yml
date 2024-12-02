@@ -142,26 +142,26 @@ services:
     labels:
       - traefik.http.services.qbittorrent.loadbalancer.server.port=8080
 
-  transmission:
-    image: lscr.io/linuxserver/transmission:latest
-    container_name: transmission
-    environment:
-      - PUID=${PUID}
-      - PGID=${PUID}
-      - TZ=Etc/UTC
-      - TRANSMISSION_WEB_HOME= #optional
-      - USER= #optional
-      - PASS= #optional
-      - WHITELIST= #optional
-      - PEERPORT= #optional
-      - HOST_WHITELIST= #optional
-    volumes:
-      - /home/mint/plexs-stack/transmission/data:/config
-      - /data/hdd:/share
-      - /data/ssd:/cache
-    restart: unless-stopped
-    labels:
-      - traefik.http.services.transmission.loadbalancer.server.port=9091
+  # transmission:
+  #   image: lscr.io/linuxserver/transmission:latest
+  #   container_name: transmission
+  #   environment:
+  #     - PUID=${PUID}
+  #     - PGID=${PUID}
+  #     - TZ=Etc/UTC
+  #     - TRANSMISSION_WEB_HOME= #optional
+  #     - USER= #optional
+  #     - PASS= #optional
+  #     - WHITELIST= #optional
+  #     - PEERPORT= #optional
+  #     - HOST_WHITELIST= #optional
+  #   volumes:
+  #     - /home/mint/plexs-stack/transmission/data:/config
+  #     - /data/hdd:/share
+  #     - /data/ssd:/cache
+  #   restart: unless-stopped
+  #   labels:
+  #     - traefik.http.services.transmission.loadbalancer.server.port=9091
 
 
   flood:
