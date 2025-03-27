@@ -127,7 +127,7 @@ services:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
     ports:
-      - 8800:8080
+      - 8694:8694
     environment:
       - PUID=${PUID}
       - PGID=${GUID}
@@ -164,21 +164,21 @@ services:
   #     - traefik.http.services.transmission.loadbalancer.server.port=9091
 
 
-  flood:
-    hostname: flood
-    image: jesec/flood
-    user: ${PUID}:${GUID}
-    restart: unless-stopped
-    command: --port 3001 --allowedpath /share
-    environment:
-      - HOME=/config
-      - PUID=${PUID}
-      - PGID=${PUID}
-    volumes:
-      - /home/mint/plexs-stack/flood/data:/config
-      - /data/hdd:/share
-    labels:
-      - traefik.http.services.flood.loadbalancer.server.port=3001
+  # flood:
+  #   hostname: flood
+  #   image: jesec/flood
+  #   user: ${PUID}:${GUID}
+  #   restart: unless-stopped
+  #   command: --port 3001 --allowedpath /share
+  #   environment:
+  #     - HOME=/config
+  #     - PUID=${PUID}
+  #     - PGID=${PUID}
+  #   volumes:
+  #     - /home/mint/plexs-stack/flood/data:/config
+  #     - /data/hdd:/share
+  #   labels:
+  #     - traefik.http.services.flood.loadbalancer.server.port=3001
 
   # #Tdarr - to transcode videos from one format to another like x265 or H.265
   # #
