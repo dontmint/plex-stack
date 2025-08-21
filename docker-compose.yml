@@ -15,6 +15,11 @@ services:
     devices:
       - /dev/dri:/dev/dri
     restart: 'unless-stopped'
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
 
     
   plex:
@@ -47,6 +52,11 @@ services:
     restart: unless-stopped
     labels:
       - traefik.http.services.plex.loadbalancer.server.port=32400
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
 
   #Radarr - used to find movies automatically
   radarr:
@@ -62,6 +72,11 @@ services:
     #networks: #Does not connect to overseer if you use NPM
     #  - proxy
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 256M
     
   #Sonarr - used to find tv shows automatically
   sonarr:
@@ -77,6 +92,11 @@ services:
     #networks: #Does not connect to overseer if you use NPM
     #  - proxy
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 256M
   
   #Prowlarr - manages your Sonarr, Radarr and download client
   prowlarr:
@@ -91,6 +111,11 @@ services:
     #networks:
     #  - proxy
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
 
   # #Autobrr - used to grab torrents using the trackers IRC channel - Increases seeding due to grabbing content before RSS feed
   # autobrr:
@@ -119,6 +144,11 @@ services:
     ports:
       - 8191:8191
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
 
   #Qbittorent - torrenting software
   #
@@ -141,6 +171,11 @@ services:
     restart: unless-stopped
     labels:
       - traefik.http.services.qbittorrent.loadbalancer.server.port=8080
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
 
   # transmission:
   #   image: lscr.io/linuxserver/transmission:latest
@@ -223,6 +258,11 @@ services:
     volumes:
       - /home/mint/plexs-stack/bazarr/config:/config
       - /data/hdd:/share
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
 
   overseerr:
     image: sctx/overseerr:latest
@@ -234,6 +274,11 @@ services:
     volumes:
       - /home/mint/plexs-stack/overseerr:/app/config
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 256M
       
 
   # #Wizarr - Allows you to create a share link that you can send to users to invite them to your media server
@@ -268,4 +313,4 @@ services:
   #       - /home/mint/plexs-stack/unmanic/config:/config
   #       - /data/hdd/media/:/library
   #     devices:
-  #       - /dev/dri:/dev/dri   
+  #       - /dev/dri:/dev/dri
