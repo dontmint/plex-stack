@@ -164,6 +164,7 @@ services:
       - TZ=${TZ}
       - WEBUI_PORT=8080
       - TORRENTING_PORT=8694 #Make sure to port forward this port in your router so you can seed more effectively
+      - DOCKER_MODS=ghcr.io/vuetorrent/vuetorrent-lsio-mod:latest
     volumes:
       - /home/mint/plexs-stack/qbittorent/config:/config
       - /data/hdd:/share
