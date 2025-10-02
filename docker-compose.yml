@@ -21,6 +21,22 @@ services:
           cpus: '3.0'
           memory: 2048M
 
+
+  cinesync:
+    image: sureshfizzy/cinesync:latest
+    container_name: cinesync
+    restart: unless-stopped
+    environment:
+      - PUID=1000    # Set to your user ID
+      - PGID=1000    # Set to your group ID
+      - TZ=Asia/Ho_Chi_Minh      # Set your timezone
+    env_file:
+      - /home/mint/plexs-stack/config/.env
+    volumes:
+      # Configuration and database
+      - /home/mint/plexs-stack/cinesync/config:/config
+      - /home/mint/plexs-stack/cinesync/data:/data
+      - /data/hdd/media:/media
     
             #  plex:
             #    hostname: plex-gtr6
