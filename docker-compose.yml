@@ -22,41 +22,41 @@ services:
           memory: 2048M
 
     
-  plex:
-    hostname: plex-gtr6
-    # image: lscr.io/linuxserver/plex:1.40.4
-    image: plexinc/pms-docker:latest
-    container_name: plex
-    shm_size: 16G
-    ports:
-      - 32400:32400/tcp 
-      - 3005:3005/tcp 
-      - 8324:8324/tcp 
-      - 32469:32469/tcp
-      - 1900:1900/udp
-      - 32410:32410/udp 
-      - 32412:32412/udp
-      - 32413:32413/udp
-      - 32414:32414/udp
-    environment:
-      - PUID=${PUID}
-      - PGID=${GUID}
-      - TZ=${TZ}
-      - VERSION=docker
-      - PLEX_CLAIM=${PLEX_CLAIM}
-    devices:
-     - /dev/dri:/dev/dri #Required for plex HW transcoding / QuickSync
-    volumes:
-      - /home/mint/plexs-stack/plex/config:/config
-      - /data/hdd/media/:/media
-    restart: unless-stopped
-    labels:
-      - traefik.http.services.plex.loadbalancer.server.port=32400
-    deploy:
-      resources:
-        limits:
-          cpus: '1.0'
-          memory: 1G
+            #  plex:
+            #    hostname: plex-gtr6
+            #    # image: lscr.io/linuxserver/plex:1.40.4
+            #    image: plexinc/pms-docker:latest
+            #    container_name: plex
+            #    shm_size: 16G
+            #    ports:
+            #      - 32400:32400/tcp 
+            #      - 3005:3005/tcp 
+            #      - 8324:8324/tcp 
+            #      - 32469:32469/tcp
+            #      - 1900:1900/udp
+            #      - 32410:32410/udp 
+            #      - 32412:32412/udp
+            #      - 32413:32413/udp
+            #      - 32414:32414/udp
+            #    environment:
+            #      - PUID=${PUID}
+            #      - PGID=${GUID}
+            #      - TZ=${TZ}
+            #      - VERSION=docker
+            #      - PLEX_CLAIM=${PLEX_CLAIM}
+            #    devices:
+            #     - /dev/dri:/dev/dri #Required for plex HW transcoding / QuickSync
+            #    volumes:
+            #      - /home/mint/plexs-stack/plex/config:/config
+            #      - /data/hdd/media/:/media
+            #    restart: unless-stopped
+            #    labels:
+            #      - traefik.http.services.plex.loadbalancer.server.port=32400
+            #    deploy:
+            #      resources:
+            #        limits:
+            #          cpus: '1.0'
+            #          memory: 1G
 
   #Radarr - used to find movies automatically
   radarr:
