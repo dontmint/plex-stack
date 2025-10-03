@@ -23,7 +23,7 @@ services:
 
 
   cinesync:
-    image: sureshfizzy/cinesync:latest
+    image: registry.sweetminty.com/cinesync:v3.1
     container_name: cinesync
     restart: unless-stopped
     environment:
