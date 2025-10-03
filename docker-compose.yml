@@ -37,7 +37,10 @@ services:
       - /home/mint/plexs-stack/cinesync/config:/config
       - /home/mint/plexs-stack/cinesync/data:/data
       - /data/hdd/media:/media
-    
+    labels:
+      - traefik.http.services.cinesync.loadbalancer.server.port=5173
+
+
             #  plex:
             #    hostname: plex-gtr6
             #    # image: lscr.io/linuxserver/plex:1.40.4
