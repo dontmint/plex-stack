@@ -30,12 +30,9 @@ services:
       - PUID=1000    # Set to your user ID
       - PGID=1000    # Set to your group ID
       - TZ=Asia/Ho_Chi_Minh      # Set your timezone
-    env_file:
-      - /home/mint/plexs-stack/config/.env
     volumes:
       # Configuration and database
-      - /home/mint/plexs-stack/cinesync/config:/config
-      - /home/mint/plexs-stack/cinesync/data:/data
+      - /home/mint/plexs-stack/cinesync/data:/app/db
       - /data/hdd/media:/media
     labels:
       - traefik.http.services.cinesync.loadbalancer.server.port=5173
